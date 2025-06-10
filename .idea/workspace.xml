@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d4c2ca05-4eb1-4978-af52-59199d6e84e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/RPG-Project/src/com/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG-Project/src/com/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPG-Project/src/com/battle/BattleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG-Project/src/com/battle/BattleManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/battle/BattleManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/battle/BattleManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/characters/Character.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/characters/Character.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/characters/Enemy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/characters/Enemy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/characters/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/characters/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/items/HealingPotion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/items/HealingPotion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/items/Item.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/items/Item.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/items/Usable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/items/Usable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/utils/InputHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/utils/InputHandler.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/RPG-Project" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2yIkYlS3UI5lwrpxcy74kKTohki" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Non system files\Cognizant Intership\Core Java Training\Rpg_Game_Main" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="com.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.Main" />
+      <module name="Rpg_Game_Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.com.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d4c2ca05-4eb1-4978-af52-59199d6e84e4" name="Changes" comment="" />
+      <created>1749529528624</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749529528624</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
