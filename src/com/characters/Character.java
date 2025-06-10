@@ -1,6 +1,6 @@
-package characters;
+package com.characters;
 
-import items.Item;
+import com.items.Item;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package characters;
+package com.characters;
 
 public class Enemy extends Character {
 

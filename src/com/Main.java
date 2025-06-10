@@ -1,6 +1,8 @@
-import characters.Player;
-import battle.BattleManager;
-import utils.InputHandler;
+package com;
+
+import com.characters.Player;
+import com.battle.BattleManager;
+import com.utils.InputHandler;
 
 public class Main {
     public static void main(String[] args) {

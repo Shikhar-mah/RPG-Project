@@ -1,6 +1,6 @@
-package items;
+package com.items;
 
-import characters.Character;
+import com.characters.Character;
 
 public class HealingPotion implements Item, Usable {
     private final String name = "Healing Potion";

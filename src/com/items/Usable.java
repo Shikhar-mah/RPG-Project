@@ -1,6 +1,6 @@
-package items;
+package com.items;
 
-import characters.Character;
+import com.characters.Character;
 
 public interface Usable {
     void use(Character target);

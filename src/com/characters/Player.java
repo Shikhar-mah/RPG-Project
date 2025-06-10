@@ -1,6 +1,6 @@
-package characters;
+package com.characters;
 
-import items.HealingPotion;
+import com.items.HealingPotion;
 
 public class Player extends Character {
 

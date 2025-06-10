@@ -1,11 +1,10 @@
-package battle;
+package com.battle;
 
-import characters.Enemy;
-import characters.Player;
-import characters.Character;
-import items.Item;
-import items.Usable;
-import utils.InputHandler;
+import com.characters.Enemy;
+import com.characters.Player;
+import com.items.Item;
+import com.items.Usable;
+import com.utils.InputHandler;
 
 public class BattleManager {
     public static void startBattle(Player player) {
@@ -39,7 +38,7 @@ public class BattleManager {
                     }
                     break;
                 case 3:
-                    System.out.println("You fled the battle!");
+                    System.out.println("You fled the com.battle!");
                     return;
                 default:
                     System.out.println("Invalid choice. Try again.");
