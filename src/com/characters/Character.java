@@ -1,5 +1,6 @@
 package com.characters;
 
+import com.items.HealingPotion;
 import com.items.Item;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,13 @@ public abstract class Character {
 
     public void takeDamage(int damage) {
         hp -= damage;
-        System.out.println(name + " takes " + damage + " damage! Remaining HP: " + hp);
+
+        if(hp<0){
+            System.out.println(name + " takes " + damage + " damage! Remaining HP: " + 0);
+        } else {
+            System.out.println(name + " takes " + damage + " damage! Remaining HP: " + hp);
+        }
+//        System.out.println(name + " takes " + damage + " damage! Remaining HP: " + hp);
     }
 
     public void heal(int amount) {
@@ -51,12 +58,20 @@ public abstract class Character {
         System.out.println(name + " heals for " + amount + " HP! Total HP: " + hp);
     }
 
-    public void addItem(Item item) {
+    public void addItem(Item item, boolean silent) {
         inventory.add(item);
-        System.out.println(item.getName() + " added to inventory.");
+        if (!silent) {
+            System.out.println(item.getName() + " added to inventory.");
+        }
     }
 
-    public List<Item> getInventory() {
+    // Default version
+    public void addItem(Item item) {
+        this.addItem(item, false);
+    }
+
+        public List<Item> getInventory() {
         return inventory;
     }
+
 }

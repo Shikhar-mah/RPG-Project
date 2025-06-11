@@ -28,7 +28,7 @@ public class BattleManager {
 
             Enemy enemy = null;
 
-            System.out.println("=== Choose an Area to Enter ===");
+            System.out.println("\n=== Choose an Area to Enter ===");
             System.out.println("1. Area 1");
             System.out.println("2. Area 2");
             System.out.println("3. Area 3");
@@ -40,11 +40,12 @@ public class BattleManager {
             int areaChoice;// = scanner.nextInt();
 
             try {
-                System.out.print("Enter your choice (1-6): ");
-                if (!scanner.hasNextInt()) throw new InvalidInputException("Please enter a valid number (1-6).");
+//                System.out.print("Enter your choice (1-6): ");
+
+                if (!scanner.hasNextInt()) throw new InvalidInputException("\nPlease enter a valid number (1-6).");
                 areaChoice = scanner.nextInt();
                 if (areaChoice < 1 || areaChoice > 6)
-                    throw new InvalidInputException("Invalid input! Choose between 1 and 6.");
+                    throw new InvalidInputException("\nInvalid input! Choose between 1 and 6.");
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine(); // Clear invalid input
@@ -52,7 +53,8 @@ public class BattleManager {
             }
 
             if (areaChoice == 6) {
-                DatabaseManager.savePlayer(player, highestAreaCompleted + 1);
+//                DatabaseManager.savePlayer(player, highestAreaCompleted + 1);
+                DatabaseManager.savePlayerUpdate(player, highestAreaCompleted + 1);
                 keepPlaying = false;
                 continue;
             }
@@ -100,7 +102,7 @@ public class BattleManager {
                 System.out.println("1. Attack");
                 System.out.println("2. Use Potion");
                 System.out.println("3. Run");
-                System.out.println("4. Show Hp");
+                System.out.println("4. Show Details");
 
 //                System.out.println("Enter choice: ");
                 int choice;// = scanner.nextInt();
@@ -117,7 +119,7 @@ public class BattleManager {
                     continue;
                 }
 
-
+                boolean run_from_battle = false;
 
                 switch (choice) {
                     case 1 -> player.attack(enemy);
@@ -128,16 +130,19 @@ public class BattleManager {
                                 ((Usable) item).use(player);
                                 player.getInventory().remove(item);
                                 used = true;
-                                break;
+                                continue;
                             }
                         }
                         if (!used) {
                             System.out.println("No usable potions found.");
                         }
+                        continue;
                     }
                     case 3 -> {
                         System.out.println("You fled the battle!");
-                        return;
+                        run_from_battle = true;
+//                        DatabaseManager.savePlayer(player, highestAreaCompleted + 1);
+                        break;
                     }
                     case 4 -> {
                         showDetails(player, enemy);
@@ -149,14 +154,30 @@ public class BattleManager {
                     }
                 }
 
-                if (enemy.isAlive()) {
+                if (enemy.isAlive() && !run_from_battle) {
                     enemy.attack(player);
+                }
+                if(run_from_battle) {
+                    break;
                 }
             }
 
+
+
             if (player.isAlive() && !enemy.isAlive()) {
-                System.out.println("You defeated the " + enemy.getName() + "!");
+//                System.out.println("You defeated the " + enemy.getName() + "!");
+                System.out.println("===========================");
                 enemy.giveExp(player, initialHp); // create an initial hp for enemy.
+                System.out.println("===========================");
+
+                // 70% chance to get a healing potion
+                if (Math.random() < 0.7) {
+                    System.out.println("===========================");
+                    System.out.println("You found a Healing Potion!");
+                    System.out.println("===========================");
+                    player.addItem(new HealingPotion());
+                }
+
                 // Update progress if this is a new highest area
                 if (areaChoice > highestAreaCompleted) {
                     highestAreaCompleted = areaChoice;

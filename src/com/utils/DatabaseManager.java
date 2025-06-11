@@ -58,6 +58,39 @@ public class DatabaseManager {
         }
     }
 
+    public static void savePlayerUpdate(Player player, int highestArea){
+        if (!saveExists(player.getName())) {
+//            System.out.println("Error: No existing player found with the name '" + player.getName() + "'. Cannot update.");
+            savePlayer(player, highestArea);
+            return;
+        }
+
+        String sql = "UPDATE player_data SET " +
+                "level = ?, " +
+                "current_exp = ?, " +
+                "potion_count = ?, " +
+                "highest_area_unlocked = ? " +
+                "WHERE player_name = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, player.getLevel());
+            pstmt.setInt(2, player.getCurrentExp());
+            long potionCount = player.getInventory().stream()
+                    .filter(item -> item instanceof HealingPotion)
+                    .count();
+            pstmt.setInt(3, (int) potionCount);
+            pstmt.setInt(4, highestArea);
+            pstmt.setString(5, player.getName());
+
+            pstmt.executeUpdate();
+            System.out.println("Game updated for " + player.getName() + "!");
+        } catch (SQLException e) {
+            System.out.println("Error updating game: " + e.getMessage());
+        }
+    }
+
     public static void savePlayer(Player player, int highestArea) {
         if (saveExists(player.getName())) {
             System.out.println("Error: A player with the name '" + player.getName() + "' already exists.");
@@ -107,7 +140,7 @@ public class DatabaseManager {
                 loadedPlayer.getInventory().clear();
                 int potionCount = rs.getInt("potion_count");
                 for (int i = 0; i < potionCount; i++) {
-                    loadedPlayer.addItem(new HealingPotion());
+                    loadedPlayer.addItem(new HealingPotion(), true); // Silent add
                 }
 
                 System.out.println("Welcome back, " + playerName + "!");

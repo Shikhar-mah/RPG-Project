@@ -11,7 +11,7 @@ public class Player extends Character {
     public Player(String name) {
         super(name, 100, 20);
         // Add a healing potion by default
-        addItem(new HealingPotion());
+        addItem(new HealingPotion(), true);
     }
 
     @Override
@@ -32,7 +32,9 @@ public class Player extends Character {
 
     private void levelUp() {
         level++;
+        System.out.println("************************************");
         System.out.println("You leveled up! You are now level " + level + "!");
+        System.out.println("************************************");
 
         // Increase stats based on level
         setHp(getHp() + 25); // Increase max HP by 25 per level
