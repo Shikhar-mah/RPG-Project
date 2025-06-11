@@ -5,42 +5,37 @@ import com.characters.Enemy;
 import com.characters.Player;
 import com.items.Item;
 import com.items.Usable;
-import com.utils.DatabaseManager;
-import com.utils.InputHandler;
+
 import java.util.Scanner;
 
 public class BattleManager {
     public static void startBattle(Player player) {
 
         Scanner scanner = new Scanner(System.in);
-        AreaManager area = new AreaManager(); // use correct class name
-        DatabaseManager dbManager = new DatabaseManager();
+        AreaManager area = new AreaManager();
         boolean keepPlaying = true;
-        int highestAreaCompleted = 0;
-
 
         while (keepPlaying && player.isAlive()) {
-
             Enemy enemy = null;
 
-            System.out.println("=== Choose an Area to Enter ===");
+            System.out.println("\n=== Choose an Area to Enter ===");
             System.out.println("1. Area 1");
             System.out.println("2. Area 2");
             System.out.println("3. Area 3");
             System.out.println("4. Area 4");
             System.out.println("5. Area 5");
-            System.out.println("6. Save and Quit");
-            System.out.print("Enter your choice (1-6): ");
+            System.out.print("Enter your choice (1-5): ");
 
-            int areaChoice = scanner.nextInt();
-
-            if (areaChoice == 6) {
-                DatabaseManager.savePlayer(player, highestAreaCompleted + 1);
-                keepPlaying = false;
+            int areaChoice;
+            if (scanner.hasNextInt()) {
+                areaChoice = scanner.nextInt();
+            } else {
+                System.out.println("Invalid input! Please enter a number between 1 and 5.");
+                scanner.next(); // clear invalid input
                 continue;
             }
 
-                switch (areaChoice) {
+            switch (areaChoice) {
                 case 1 -> {
                     System.out.println("You are entering Area 1...");
                     enemy = area.area1(player);
@@ -61,21 +56,31 @@ public class BattleManager {
                     System.out.println("You are entering Area 5...");
                     enemy = area.area5(player);
                 }
-                default -> System.out.println("Invalid choice! Please enter a number between 1 and 5.");
+                default -> {
+                    System.out.println("Invalid choice! Please enter a number between 1 and 5.");
+                    continue;
+                }
             }
 
-//        Enemy enemy = new Enemy("Syntax Troll", 50, 10);
             System.out.println("A wild " + enemy.getName() + " appears!");
-            while (player.isAlive() && enemy.isAlive()) {
+            boolean escaped = false;
 
+            while (player.isAlive() && enemy.isAlive()) {
                 System.out.println("\nChoose an action:");
                 System.out.println("1. Attack");
                 System.out.println("2. Use Potion");
                 System.out.println("3. Run");
                 System.out.println("4. Show Hp");
+                System.out.print("Enter choice: ");
 
-                System.out.println("Enter choice: ");
-                int choice = scanner.nextInt();
+                int choice;
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                } else {
+                    System.out.println("Invalid input! Please enter 1, 2, or 3.");
+                    scanner.next(); // clear invalid input
+                    continue;
+                }
 
                 switch (choice) {
                     case 1:
@@ -96,8 +101,9 @@ public class BattleManager {
                         }
                         break;
                     case 3:
-                        System.out.println("You fled the com.battle!");
-                        return;
+                        System.out.println("You ran away from the battle!");
+                        escaped = true;
+                        break;
                     case 4:
                         System.out.println("Players hp: " + player.getHp());
                         System.out.println("Enemy hp: " + enemy.getHp());
@@ -106,24 +112,25 @@ public class BattleManager {
                         System.out.println("Invalid choice. Try again.");
                 }
 
+                if (escaped || !enemy.isAlive()) {
+                    break;
+                }
+
                 if (enemy.isAlive()) {
                     enemy.attack(player);
                 }
             }
 
-            if (player.isAlive() && !enemy.isAlive()) {
-                System.out.println("You defeated the " + enemy.getName() + "!");
-                // Update progress if this is a new highest area
-                if (areaChoice > highestAreaCompleted) {
-                    highestAreaCompleted = areaChoice;
-                }
-            }
-
             if (!player.isAlive()) {
                 System.out.println("You have been defeated...");
+                keepPlaying = false;
             } else if (!enemy.isAlive()) {
                 System.out.println("You defeated the " + enemy.getName() + "!");
+            } else if (escaped) {
+                System.out.println("You safely escaped. Choose another area!");
             }
         }
+
+        System.out.println("\nGame Over. Thanks for playing!");
     }
 }

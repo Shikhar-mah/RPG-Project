@@ -30,17 +30,6 @@ public abstract class Character {
         return hp;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getAttackPower() {
-        return this.attackPower;
-    }
-    public void setAttackPower(int attackPower) {
-        this.attackPower = attackPower;
-    }
-
     public void takeDamage(int damage) {
         hp -= damage;
         System.out.println(name + " takes " + damage + " damage! Remaining HP: " + hp);

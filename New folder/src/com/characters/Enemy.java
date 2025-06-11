@@ -6,17 +6,9 @@ public class Enemy extends Character {
         super(name, hp, attackPower);
     }
 
-    protected int expGiven = hp*2;
     @Override
     public void attack(Character target) {
         System.out.println(name + " attacks " + target.getName() + " for " + attackPower + " damage!");
         target.takeDamage(attackPower);
     }
-
-    public void giveExp(){
-
-    }
-
-
-
 }

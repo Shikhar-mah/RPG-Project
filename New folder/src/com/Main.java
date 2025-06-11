@@ -6,6 +6,7 @@ import com.utils.InputHandler;
 
 public class Main {
     public static void main(String[] args) {
+//        Player player()
         System.out.println("Welcome to Legends of the Terminal Realm!");
         String name = InputHandler.getString("Enter your hero's name: ");
 
