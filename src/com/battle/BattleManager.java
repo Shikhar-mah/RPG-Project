@@ -65,6 +65,7 @@ public class BattleManager {
             }
 
 //        Enemy enemy = new Enemy("Syntax Troll", 50, 10);
+            int initialHp = enemy.getHp();
             System.out.println("A wild " + enemy.getName() + " appears!");
             while (player.isAlive() && enemy.isAlive()) {
 
@@ -99,8 +100,10 @@ public class BattleManager {
                         System.out.println("You fled the com.battle!");
                         return;
                     case 4:
-                        System.out.println("Players hp: " + player.getHp());
-                        System.out.println("Enemy hp: " + enemy.getHp());
+                        System.out.println("Player Level: " + player.getLevel());
+                        System.out.println("Player HP: " + player.getHp());
+                        System.out.println("Enemy HP: " + enemy.getHp());
+                        System.out.println("Current EXP: " + player.getCurrentExp() + " / " + player.getExpRequiredForNextLevel());
                         continue;
                     default:
                         System.out.println("Invalid choice. Try again.");
@@ -113,10 +116,12 @@ public class BattleManager {
 
             if (player.isAlive() && !enemy.isAlive()) {
                 System.out.println("You defeated the " + enemy.getName() + "!");
+                enemy.giveExp(player, initialHp); // create an initial hp for enemy.
                 // Update progress if this is a new highest area
                 if (areaChoice > highestAreaCompleted) {
                     highestAreaCompleted = areaChoice;
                 }
+
             }
 
             if (!player.isAlive()) {

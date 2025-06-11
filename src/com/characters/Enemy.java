@@ -13,10 +13,8 @@ public class Enemy extends Character {
         target.takeDamage(attackPower);
     }
 
-    public void giveExp(){
-
+    public void giveExp(Player player, int hp) {
+        int exp = hp * 2;
+        player.gainExp(exp);
     }
-
-
-
 }

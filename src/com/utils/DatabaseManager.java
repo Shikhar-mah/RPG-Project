@@ -10,7 +10,7 @@ public class DatabaseManager {
 
     private static final String DB_HOST = "localhost";
     private static final String DB_PORT = "3306";
-    private static final String DB_NAME = "rpggame";
+    private static final String DB_NAME = "rpgGame";
     private static final String DB_USER = "root";
     private static final String DB_PASS = "root";
 
@@ -74,6 +74,8 @@ public class DatabaseManager {
             long potionCount = player.getInventory().stream().filter(item -> item instanceof HealingPotion).count();
             pstmt.setInt(4, (int) potionCount);
             pstmt.setInt(5, highestArea);
+            pstmt.setInt(2, player.getLevel());
+            pstmt.setInt(3, player.getCurrentExp());
 
             pstmt.executeUpdate();
             System.out.println("Game saved for " + player.getName() + "!");
@@ -95,6 +97,7 @@ public class DatabaseManager {
 
             if (rs.next()) {
                 Player loadedPlayer = new Player(playerName);
+
                 int level = rs.getInt("level");
                 loadedPlayer.setLevel(level);
                 loadedPlayer.setCurrentExp(rs.getInt("current_exp"));
