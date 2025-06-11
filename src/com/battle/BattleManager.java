@@ -3,10 +3,15 @@ package com.battle;
 import com.areas.AreaManager;
 import com.characters.Enemy;
 import com.characters.Player;
+import com.exceptions.InvalidInputException;
+import com.items.HealingPotion;
 import com.items.Item;
 import com.items.Usable;
 import com.utils.DatabaseManager;
 import com.utils.InputHandler;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class BattleManager {
@@ -32,15 +37,35 @@ public class BattleManager {
             System.out.println("6. Save and Quit");
             System.out.print("Enter your choice (1-6): ");
 
-            int areaChoice = scanner.nextInt();
+            int areaChoice;// = scanner.nextInt();
+
+            try {
+                System.out.print("Enter your choice (1-6): ");
+                if (!scanner.hasNextInt()) throw new InvalidInputException("Please enter a valid number (1-6).");
+                areaChoice = scanner.nextInt();
+                if (areaChoice < 1 || areaChoice > 6)
+                    throw new InvalidInputException("Invalid input! Choose between 1 and 6.");
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine(); // Clear invalid input
+                continue;
+            }
 
             if (areaChoice == 6) {
                 DatabaseManager.savePlayer(player, highestAreaCompleted + 1);
                 keepPlaying = false;
                 continue;
             }
+//
+//
+//
+//            if (areaChoice == 6) {
+//                DatabaseManager.savePlayer(player, highestAreaCompleted + 1);
+//                keepPlaying = false;
+//                continue;
+//            }
 
-                switch (areaChoice) {
+            switch (areaChoice) {
                 case 1 -> {
                     System.out.println("You are entering Area 1...");
                     enemy = area.area1(player);
@@ -66,7 +91,9 @@ public class BattleManager {
 
 //        Enemy enemy = new Enemy("Syntax Troll", 50, 10);
             int initialHp = enemy.getHp();
-            System.out.println("A wild " + enemy.getName() + " appears!");
+
+//            System.out.println("A wild " + enemy.getName() + " appears!");
+
             while (player.isAlive() && enemy.isAlive()) {
 
                 System.out.println("\nChoose an action:");
@@ -75,14 +102,26 @@ public class BattleManager {
                 System.out.println("3. Run");
                 System.out.println("4. Show Hp");
 
-                System.out.println("Enter choice: ");
-                int choice = scanner.nextInt();
+//                System.out.println("Enter choice: ");
+                int choice;// = scanner.nextInt();
+
+
+                try {
+                    System.out.print("Enter choice: ");
+                    if (!scanner.hasNextInt())
+                        throw new InvalidInputException("Only numbers between 1 - 4 are allowed!");
+                    choice = scanner.nextInt();
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                    scanner.nextLine(); // Clear invalid input
+                    continue;
+                }
+
+
 
                 switch (choice) {
-                    case 1:
-                        player.attack(enemy);
-                        break;
-                    case 2:
+                    case 1 -> player.attack(enemy);
+                    case 2 -> {
                         boolean used = false;
                         for (Item item : player.getInventory()) {
                             if (item instanceof Usable) {
@@ -95,18 +134,19 @@ public class BattleManager {
                         if (!used) {
                             System.out.println("No usable potions found.");
                         }
-                        break;
-                    case 3:
-                        System.out.println("You fled the com.battle!");
+                    }
+                    case 3 -> {
+                        System.out.println("You fled the battle!");
                         return;
-                    case 4:
-                        System.out.println("Player Level: " + player.getLevel());
-                        System.out.println("Player HP: " + player.getHp());
-                        System.out.println("Enemy HP: " + enemy.getHp());
-                        System.out.println("Current EXP: " + player.getCurrentExp() + " / " + player.getExpRequiredForNextLevel());
+                    }
+                    case 4 -> {
+                        showDetails(player, enemy);
                         continue;
-                    default:
+                    }
+                    default -> {
                         System.out.println("Invalid choice. Try again.");
+                        continue;
+                    }
                 }
 
                 if (enemy.isAlive()) {
@@ -131,4 +171,31 @@ public class BattleManager {
             }
         }
     }
+
+    private static void showDetails(Player player, Enemy enemy) {
+        System.out.println("\n=== Player Details ===");
+        Map<String, Object> playerDetails = new HashMap<>();
+        playerDetails.put("Name", player.getName());
+        playerDetails.put("Level", player.getLevel());
+        playerDetails.put("HP", player.getHp());
+        playerDetails.put("Attack Power", player.getAttackPower());
+        playerDetails.put("Potions", player.getInventory().stream().filter(i -> i instanceof HealingPotion).count());
+
+        playerDetails.forEach((k, v) -> System.out.println(k + ": " + v));
+        System.out.println("Current EXP: " + player.getCurrentExp() + " / " + player.getExpRequiredForNextLevel());
+
+        System.out.println("\n=== Enemy Details ===");
+        Map<String, Object> enemyDetails = new HashMap<>();
+        enemyDetails.put("Name", enemy.getName());
+        enemyDetails.put("HP", enemy.getHp());
+        enemyDetails.put("Attack Power", enemy.getAttackPower());
+
+        enemyDetails.forEach(
+                (k, v) -> System.out.println(k + ": " + v)
+        );
+
+
+    }
+
+
 }

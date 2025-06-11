@@ -42,7 +42,7 @@ public class AreaManager {
         Enemy enyArea2_2 = new Enemy("Dire Wolf", 25, 20);
 
         Enemy selectedEnemy = getRandomEnemy(enyArea2_1, enyArea2_2);
-        System.out.println("Area 2 - Enemy encountered: " + selectedEnemy.getName());
+        System.out.println("A wild " + selectedEnemy.getName() + " appears!");
 
 //            battle(player, selectedEnemy);
 
@@ -55,7 +55,7 @@ public class AreaManager {
         Enemy enyArea3_2 = new Enemy("Vampire", 35, 30);
 
         Enemy selectedEnemy = getRandomEnemy(enyArea3_1, enyArea3_2);
-        System.out.println("Area 3 - Enemy encountered: " + selectedEnemy.getName());
+        System.out.println("A wild " + selectedEnemy.getName() + " appears!");
 
 //            battle(player, selectedEnemy);
 
@@ -68,7 +68,7 @@ public class AreaManager {
         Enemy enyArea4_2 = new Enemy("Demon Knight", 45, 40);
 
         Enemy selectedEnemy = getRandomEnemy(enyArea4_1, enyArea4_2);
-        System.out.println("Area 4 - Enemy encountered: " + selectedEnemy.getName());
+        System.out.println("A wild " + selectedEnemy.getName() + " appears!");
 
 //            battle(player, selectedEnemy);
 
@@ -81,7 +81,7 @@ public class AreaManager {
         Enemy enyArea5_2 = new Enemy("Ancient Dragon", 55, 50);
 
         Enemy selectedEnemy = getRandomEnemy(enyArea5_1, enyArea5_2);
-        System.out.println("Area 5 - Enemy encountered: " + selectedEnemy.getName());
+        System.out.println("A wild " + selectedEnemy.getName() + " appears!");
 
 //            battle(player, selectedEnemy);
         return selectedEnemy;
