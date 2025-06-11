@@ -4,6 +4,8 @@ import com.characters.Player;
 import com.items.HealingPotion;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseManager {
 
@@ -57,32 +59,28 @@ public class DatabaseManager {
     }
 
     public static void savePlayer(Player player, int highestArea) {
-        String sql = "INSERT INTO player_data (player_name, level, current_exp, potion_count, highest_area_unlocked) " +
-                "VALUES (?, ?, ?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE " +
-                "level = VALUES(level), " +
-                "current_exp = VALUES(current_exp), " +
-                "potion_count = VALUES(potion_count), " +
-                "highest_area_unlocked = VALUES(highest_area_unlocked);";
+        if (saveExists(player.getName())) {
+            System.out.println("Error: A player with the name '" + player.getName() + "' already exists.");
+            return;
+        }
 
+        String sql = "INSERT INTO player_data (player_name, level, current_exp, potion_count, highest_area_unlocked) " +
+                "VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, player.getName());
             pstmt.setInt(2, player.getLevel());
             pstmt.setInt(3, player.getCurrentExp());
-            long potionCount = player.getInventory().stream().filter(item -> item instanceof HealingPotion).count();
+            long potionCount = player.getInventory().stream()
+                    .filter(item -> item instanceof HealingPotion)
+                    .count();
             pstmt.setInt(4, (int) potionCount);
             pstmt.setInt(5, highestArea);
-            pstmt.setInt(2, player.getLevel());
-            pstmt.setInt(3, player.getCurrentExp());
-
             pstmt.executeUpdate();
             System.out.println("Game saved for " + player.getName() + "!");
-
         } catch (SQLException e) {
             System.out.println("Error saving game: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -138,4 +136,31 @@ public class DatabaseManager {
             return false;
         }
     }
+
+    public static List<Player> loadAllPlayers() {
+        List<Player> players = new ArrayList<>();
+        String sql = "SELECT player_name, level, current_exp FROM player_data";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String name = rs.getString("player_name");
+                int level = rs.getInt("level");
+                int exp = rs.getInt("current_exp");
+
+                Player player = new Player(name);
+                player.setLevel(level);
+                player.setCurrentExp(exp);
+                player.setHp(100 + (level - 1) * 25);
+                player.setAttackPower(10 + (level - 1) * 5);
+
+                players.add(player);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading saved players: " + e.getMessage());
+        }
+        return players;
+    }
+
 }
